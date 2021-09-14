@@ -10,7 +10,8 @@ creates a "saveloc" or checkpoint that the player can teleport to at any time.
 usage: sm_tele / sm_tele <number>
 teleports the player to an existing saveloc.
 
--sm_teleprev (!teleprev)
+-sm_teleprev (!teleprev) 
+
 usage: sm_teleprev
 teleports the player to their last created saveloc.
 

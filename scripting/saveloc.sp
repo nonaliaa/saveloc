@@ -13,6 +13,23 @@ float g_feyeAngle_library[1000][3];
 int g_isaveloc_number = 0;
 // the last used, or last created saveloc for a user
 int g_irelevant_saveloc[MAXPLAYERS + 1];
+// saves the last saveloc the client created.
+int g_ilast_created_saveloc[MAXPLAYERS + 1];
+
+
+public void OnPluginStart()
+{
+    RegConsoleCmd("sm_saveloc", Command_saveloc, "a command that creates a \"saveloc\" or checkpoint the client can teleport to with sm_tele");
+    RegConsoleCmd("sm_tele", Command_tele, "a command to teleport to a \"saveloc\" or checkpoint the client has made.");
+    RegConsoleCmd("sm_teleprev", teleprev, "a command to teleport you to the previous saveloc.");
+    RegConsoleCmd("sm_telenext", telenext, "a command to teleport you to the next saveloc, if it exists.");
+    //RegConsoleCmd("sm_settele", settele, "a command to send you to any point in the array of savelocs. made for debugging. uncomment this at your own risk...");
+}
+
+public void OnMapStart()
+{
+    g_isaveloc_number = 0; // reset savelocs after map changes.
+}
 
 
 public Action Command_saveloc(int client, int args)
@@ -33,7 +50,7 @@ public Action Command_saveloc(int client, int args)
 		}
 	}
 	g_irelevant_saveloc[client] = g_isaveloc_number;
-	
+	g_ilast_created_saveloc[client] = g_isaveloc_number;
 	float velocity[3];
 	float eyeangles[3];
 	float origin[3];
@@ -94,7 +111,7 @@ public Action Command_tele(int client, int args)
 
 public Action teleprev(int client, int args)
 {
-	g_irelevant_saveloc[client]--;
+	g_irelevant_saveloc[client] = g_ilast_created_saveloc[client];
 	TeleportEntity(client, g_forigin_library[g_irelevant_saveloc[client]], g_feyeAngle_library[g_irelevant_saveloc[client]], g_fvelocity_library[g_irelevant_saveloc[client]]);
 	PrintToChat(client, "teleported to saveloc #%d", g_irelevant_saveloc[client]);
 	return Plugin_Handled;

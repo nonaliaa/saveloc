@@ -18,10 +18,10 @@ plugin that aims to mimmick the ksf timer's core saveloc functionality.
 
     usage: sm_teleprev
 
-    teleports the player to their last created saveloc.
+    teleports the player to the last created saveloc in the list.
 
 - sm_telenext (!telenext)
 
     usage: sm_telenext 
 
-    teleports the player to ~~their next created saveloc~~ the next saveloc in the array.
+    teleports the player to the next saveloc in the list.

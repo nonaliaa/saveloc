@@ -1,0 +1,1 @@
+plugin that aims to mimmick the ksf timer's saveloc function.

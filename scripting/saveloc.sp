@@ -111,10 +111,11 @@ public Action Command_tele(int client, int args)
 
 public Action teleprev(int client, int args)
 {
-	g_irelevant_saveloc[client] = g_ilast_created_saveloc[client];
-	TeleportEntity(client, g_forigin_library[g_irelevant_saveloc[client]], g_feyeAngle_library[g_irelevant_saveloc[client]], g_fvelocity_library[g_irelevant_saveloc[client]]);
-	PrintToChat(client, "teleported to saveloc #%d", g_irelevant_saveloc[client]);
-	return Plugin_Handled;
+	//g_irelevant_saveloc[client] = g_ilast_created_saveloc[client]; I fucked up here will fix later
+    g_irelevant_saveloc[client]--;
+    TeleportEntity(client, g_forigin_library[g_irelevant_saveloc[client]], g_feyeAngle_library[g_irelevant_saveloc[client]], g_fvelocity_library[g_irelevant_saveloc[client]]);
+    PrintToChat(client, "teleported to saveloc #%d", g_irelevant_saveloc[client]);
+    return Plugin_Handled;
 }
 
 

@@ -1,4 +1,6 @@
-plugin that aims to mimmick the ksf timer's core saveloc functionality.
+work in progress plugin that aims to mimmick/improve the ksf timer's core saveloc functionality.
+
+currently untested with multiple people on the server. if anyone tries this on a server with multiple people and encounters problems making an issue would be greatly appreciated.
 
 #### commands 
 
@@ -18,10 +20,10 @@ plugin that aims to mimmick the ksf timer's core saveloc functionality.
 
     usage: sm_teleprev
 
-    teleports the player to the last created saveloc in the list.
+    teleports the player to the player's last created saveloc.
 
 - sm_telenext (!telenext)
 
     usage: sm_telenext 
 
-    teleports the player to the next saveloc in the list.
+    teleports the player to the player's next created saveloc.

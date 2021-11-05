@@ -1,6 +1,5 @@
 #include <sdktools>
 #include <sourcemod>
-#include <regex>
 
 #pragma semicolon 1
 #pragma newdecls required 
@@ -46,6 +45,7 @@ public Action Command_saveloc(int client, int args)
 {
 	g_isaveloc_number++;
 	g_icreatedlist++;
+	
 	switch (g_isaveloc_number)
 	{
 		case 998:

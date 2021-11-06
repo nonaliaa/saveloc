@@ -27,12 +27,13 @@ bool g_bcanigobacknforth[MAXPLAYERS + 1];
 
 public void OnPluginStart()
 {
-    RegConsoleCmd("sm_saveloc", Command_saveloc, "a command that creates a \"saveloc\" or checkpoint the client can teleport to with sm_tele");
-    RegConsoleCmd("sm_tele", Command_tele, "a command to teleport to a \"saveloc\" or checkpoint the client has made.");
-    RegConsoleCmd("sm_teleprev", teleprev, "a command to teleport you to the previous saveloc.");
-    RegConsoleCmd("sm_telenext", telenext, "a command to teleport you to the next saveloc, if it exists.");
-   // RegConsoleCmd("sm_settele", settele, "a command to send you to any point in the array of savelocs. made for debugging. uncomment this at your own risk...");
-}
+	RegConsoleCmd("sm_saveloc", Command_saveloc, "a command that creates a \"saveloc\" or checkpoint the client can teleport to with sm_tele");
+	RegConsoleCmd("sm_tele", Command_tele, "a command to teleport to a \"saveloc\" or checkpoint the client has made.");
+	RegConsoleCmd("sm_teleprev", teleprev, "a command to teleport you to the previous saveloc.");
+	RegConsoleCmd("sm_telenext", telenext, "a command to teleport you to the next saveloc, if it exists.");
+	// RegConsoleCmd("sm_settele", settele, "a command to send you to any point in the array of savelocs. made for debugging. uncomment this at your own risk...");
+	
+} 
 
 public void OnMapStart()
 {
@@ -78,7 +79,7 @@ public Action Command_saveloc(int client, int args)
 	g_forigin_library[g_isaveloc_number] = origin;
 	g_feyeAngle_library[g_isaveloc_number] = eyeangles;
 	
-	PrintToChat(client, "created saveloc %d", g_isaveloc_number);
+	PrintToChat(client, "created saveloc #%d", g_isaveloc_number);
 	
 	
 	
@@ -105,12 +106,15 @@ public Action Command_tele(int client, int args)
 			}
 			case 1:
 			{
-				char arg1[4];
+				char arg1[6];
 				GetCmdArg(1, arg1, sizeof(arg1));
+				removechar(arg1, '#');
+
 				int tele_arg = StringToInt(arg1);
+
 				if (tele_arg > g_isaveloc_number)
 				{
-					PrintToChat(client, "saveloc %d does not exist!", tele_arg);
+					PrintToChat(client, "saveloc #%d does not exist!", tele_arg);
 					return Plugin_Handled;
 				}
 				g_irelevant_saveloc[client] = tele_arg;
@@ -131,6 +135,11 @@ public Action Command_tele(int client, int args)
 public Action teleprev(int client, int args)
 {	
 	int prevtele;
+	if(g_isaveloc_number <- 1)
+	{
+		PrintToChat(client, "you can't go to a tele that doesn't exist silly!");
+		return Plugin_Handled;
+	}
 
 	switch(g_bcanigobacknforth[client])
 	{
@@ -140,7 +149,7 @@ public Action teleprev(int client, int args)
 			prevtele = g_ilast_created_saveloc[client][g_irelevant_saveloc[client] - 1];
 			g_irelevant_saveloc[client] = prevtele;
 			TeleportEntity(client, g_forigin_library[g_irelevant_saveloc[client]], g_feyeAngle_library[g_irelevant_saveloc[client]], g_fvelocity_library[g_irelevant_saveloc[client]]);
-			PrintToChat(client, "teleported to saveloc %d", g_irelevant_saveloc[client]);
+			PrintToChat(client, "teleported to saveloc #%d", g_irelevant_saveloc[client]);
 			return Plugin_Handled;
 		}
 
@@ -149,7 +158,7 @@ public Action teleprev(int client, int args)
 			prevtele = g_ilast_created_saveloc[client][g_irelevant_saveloc[client] - 1];
 			g_irelevant_saveloc[client] = prevtele;
 			TeleportEntity(client, g_forigin_library[g_irelevant_saveloc[client]], g_feyeAngle_library[g_irelevant_saveloc[client]], g_fvelocity_library[g_irelevant_saveloc[client]]);
-			PrintToChat(client, "teleported to saveloc %d",g_irelevant_saveloc[client]);
+			PrintToChat(client, "teleported to saveloc #%d",g_irelevant_saveloc[client]);
 			return Plugin_Handled;
 		}
 	}
@@ -228,3 +237,11 @@ public Action settele(int client, int args)
 }
 */
 
+void removechar(char[] string, char removed)
+{
+	for (int i = 0; i <= strlen(string); i++)
+	{
+		if(string[i] == removed)
+			string[i] = ' ';
+	}
+}	

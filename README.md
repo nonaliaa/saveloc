@@ -1,6 +1,8 @@
-work in progress plugin that aims to mimmick/improve the ksf timer's core saveloc functionality.
+plugin that aims to mimmick/improve the ksf timer's core saveloc functionality.
 
 currently untested with multiple people on the server. if anyone tries this on a server with multiple people and encounters problems making an issue would be greatly appreciated.
+
+likely won't be getting many more updates as i'll mainly be working on my [surftimer](https://github.com/nonaliaa/surf-tiemr) from now on.
 
 #### commands 
 
